@@ -3,6 +3,7 @@ package com.example.authserver.config;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,9 +23,7 @@ public class WebSecurityConfig {
   // A Spring Security filter chain for authentication.
   public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
     return http
-        .cors(corsConfigurer -> {
-          corsConfigurer.configurationSource(corsConfigurationSource);
-        })
+        .cors(Customizer.withDefaults())
         // Form login handles the redirect to the login page from the
 			  // authorization server filter chain
         .formLogin(formLoginCustomizer -> {

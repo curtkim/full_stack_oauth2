@@ -9,7 +9,6 @@ import java.util.List;
 
 @Configuration
 public class CORSSourceConfig {
-
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfigurationSource source = s -> {

@@ -63,9 +63,7 @@ public class AuthorizationServerConfig {
         .oauth2ResourceServer((resourceServer) ->{
           resourceServer.jwt(Customizer.withDefaults());
         })
-        .cors(corsConfigurer -> {
-          corsConfigurer.configurationSource(corsConfigurationSource);
-        });
+        .cors(Customizer.withDefaults());
 
     return http.build();
     //return http.formLogin(Customizer.withDefaults()).build();
