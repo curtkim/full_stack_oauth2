@@ -21,6 +21,7 @@
     headers
   }).then(async (response) => {
     const token = await response.json();
+    console.log(token)
     if (token?.id_token) {
       sessionStorage.setItem('id_token', token.id_token);
       goto('/');
