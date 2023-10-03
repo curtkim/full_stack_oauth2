@@ -14,23 +14,25 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http.cors(c -> {
-      CorsConfigurationSource source = s -> {
-        CorsConfiguration cc = new CorsConfiguration();
-        cc.setAllowCredentials(true);
-        cc.setAllowedOrigins(List.of("http://127.0.0.1:3000"));
-        cc.setAllowedHeaders(List.of("*"));
-        cc.setAllowedMethods(List.of("*"));
-        return cc;
-      };
-
-      c.configurationSource(source);
-    });
-
-    http.authorizeHttpRequests().anyRequest()
-        .authenticated().and()
-        .oauth2ResourceServer()
-        .jwt();
+    http
+        .cors(corsConfigurer -> {
+          CorsConfigurationSource source = s -> {
+            CorsConfiguration cc = new CorsConfiguration();
+            cc.setAllowCredentials(true);
+            cc.setAllowedOrigins(List.of("http://127.0.0.1:3000"));
+            cc.setAllowedHeaders(List.of("*"));
+            cc.setAllowedMethods(List.of("*"));
+            return cc;
+          };
+          corsConfigurer.configurationSource(source);
+        })
+        .authorizeHttpRequests(reqMatcherRegistry -> {
+          reqMatcherRegistry.anyRequest().authenticated();
+        })
+        .oauth2ResourceServer(oauth2ResourceServerCustomizer -> {
+          oauth2ResourceServerCustomizer.jwt(jwtCustomizer -> {
+          });
+        });
     return http.build();
   }
 
